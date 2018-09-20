@@ -1,0 +1,5 @@
+[run]
+omit =
+    manage.py
+    Insurance/wsgi.py
+    Insurance/settings/prod.py
