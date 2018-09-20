@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import generics, permissions
 
-# Create your views here.
+from . import serializers, models
+
+
+class ListCreateRiskTypeView(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAdminUser, )
+    serializer_class = serializers.RiskTypeListSerializer
+    queryset = models.RiskType.objects.all()
