@@ -96,3 +96,20 @@ class TestListCreateRiskTypes(BaseApiTestCase):
         }
         response = self.client.post(self.url, data=data, format='json')
         self.assertEquals(response.status_code, 400)
+
+
+class TestRetrieveUpdateDestroyRiskType(APITestCase):
+    def setUp(self):
+        super(TestRetrieveUpdateDestroyRiskType, self).setUp()
+        self.risk_type = factories.RiskTypeFactory()
+        self.risk_field = factories.RiskFieldFactory(risk_type=self.risk_type)
+        self.url = reverse_lazy('Custom:detail-risk-type', kwargs={
+            'pk': self.risk_type.pk,
+        })
+
+    def test_retrieve_risk_type(self):
+        response = self.client.get(self.url, format='json')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.data['name'], self.risk_type.name)
+        self.assertEquals(response.data['risk_fields'][0]['name'],
+                          self.risk_field.name)
