@@ -13,6 +13,11 @@ class BaseApiTestCase(APITestCase):
         self.token, _ = Token.objects.get_or_create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
 
+    def remove_superuser_status(self):
+        self.user.is_superuser = False
+        self.user.is_staff = False
+        self.user.save()
+
 
 class TestModelStringRepresentations(TestCase):
     def setUp(self):
@@ -91,9 +96,7 @@ class TestListCreateRiskTypes(BaseApiTestCase):
         self.assertEquals(response.data['results'][0]['name'], risk_type.name)
 
     def test_non_superuser_create_risk_type(self):
-        self.user.is_superuser = False
-        self.user.is_staff = False
-        self.user.save()
+        self.remove_superuser_status()
         data = {
             'name': 'Non User Risk Type'
         }
@@ -147,3 +150,9 @@ class TestRetrieveUpdateDestroyRiskType(BaseApiTestCase):
                           len(data['risk_fields']))
         self.assertEquals(response.data['risk_fields'][0]['options'],
                           data['risk_fields'][0]['options'])
+
+    def test_non_superuser_update_risk_type(self):
+        self.remove_superuser_status()
+        data = self.generate_update_data()
+        response = self.client.patch(self.url, data=data, format='json')
+        self.assertEquals(response.status_code, 403)
