@@ -16,7 +16,7 @@ class RiskFieldSerializer(serializers.ModelSerializer):
         }
 
 
-class RiskTypeListSerializer(serializers.ModelSerializer):
+class RiskTypeSerializer(serializers.ModelSerializer):
     risk_fields = RiskFieldSerializer(many=True, required=False)
 
     class Meta:
@@ -26,14 +26,14 @@ class RiskTypeListSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         risk_fields = validated_data.pop('risk_fields', [])
-        risk_type = super(RiskTypeListSerializer, self).create(validated_data)
+        risk_type = super(RiskTypeSerializer, self).create(validated_data)
         for field in risk_fields:
             risk_type.risk_fields.create(**field)
         return risk_type
 
     def update(self, instance, validated_data):
         risk_fields = validated_data.pop('risk_fields', [])
-        instance = super(RiskTypeListSerializer, self).update(
+        instance = super(RiskTypeSerializer, self).update(
             instance, validated_data)
         for field_data in risk_fields:
             field_id = field_data.pop('id', None)
