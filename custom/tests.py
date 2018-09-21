@@ -99,7 +99,7 @@ class TestListCreateRiskTypes(BaseApiTestCase):
         self.assertEquals(response.status_code, 403)
 
 
-class TestRetrieveUpdateDestroyRiskType(APITestCase):
+class TestRetrieveUpdateDestroyRiskType(BaseApiTestCase):
     def setUp(self):
         super(TestRetrieveUpdateDestroyRiskType, self).setUp()
         self.risk_type = factories.RiskTypeFactory()
@@ -108,9 +108,40 @@ class TestRetrieveUpdateDestroyRiskType(APITestCase):
             'pk': self.risk_type.pk,
         })
 
+    def generate_update_data(self):
+        return {
+            'name': 'Truck Risk Type',
+            'risk_fields': [
+                {
+                    # This one for update
+                    'id': self.risk_field.id,
+                    'options': [
+                        'manual',
+                        'automatic',
+                        'semi-automatic',
+                    ]
+                },
+                {
+                    # This one for append to fields
+                    'name': 'Color',
+                    'type': 'color',
+                },
+            ]
+        }
+
     def test_retrieve_risk_type(self):
         response = self.client.get(self.url, format='json')
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.data['name'], self.risk_type.name)
         self.assertEquals(response.data['risk_fields'][0]['name'],
                           self.risk_field.name)
+
+    def test_update_risk_type(self):
+        data = self.generate_update_data()
+        response = self.client.patch(self.url, data=data, format='json')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.data['name'], data['name'])
+        self.assertEquals(len(response.data['risk_fields']),
+                          len(data['risk_fields']))
+        self.assertEquals(response.data['risk_fields'][0]['options'],
+                          data['risk_fields'][0]['options'])
