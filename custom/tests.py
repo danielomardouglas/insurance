@@ -156,3 +156,12 @@ class TestRetrieveUpdateDestroyRiskType(BaseApiTestCase):
         data = self.generate_update_data()
         response = self.client.patch(self.url, data=data, format='json')
         self.assertEquals(response.status_code, 403)
+
+    def test_destroy_risk_type(self):
+        response = self.client.delete(self.url, format='json')
+        self.assertEquals(response.status_code, 204)
+
+    def test_non_superuser_delete_risk_type(self):
+        self.remove_superuser_status()
+        response = self.client.delete(self.url, format='json')
+        self.assertEquals(response.status_code, 403)
