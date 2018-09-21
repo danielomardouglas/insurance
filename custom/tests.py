@@ -87,3 +87,12 @@ class TestCreateRiskTypes(BaseApiTestCase):
         response = self.client.get(self.url, format='json')
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.data['results'][0]['name'], risk_type.name)
+
+    def test_non_superuser_create_risk_type(self):
+        self.user.is_superuser = False
+        self.user.save()
+        data = {
+            'name': 'Non User Risk Type'
+        }
+        response = self.client.post(self.url, data=data, format='json')
+        self.assertEquals(response.status_code, 400)
