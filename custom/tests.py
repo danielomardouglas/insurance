@@ -27,9 +27,9 @@ class TestModelStringRepresentations(TestCase):
                           f"{self.risk_field.name} {self.risk_field.type}")
 
 
-class TestCreateRiskTypes(BaseApiTestCase):
+class TestListCreateRiskTypes(BaseApiTestCase):
     def setUp(self):
-        super(TestCreateRiskTypes, self).setUp()
+        super(TestListCreateRiskTypes, self).setUp()
         self.url = reverse_lazy('Custom:list-create-risk-type')
 
     def test_create_risk_type(self):
