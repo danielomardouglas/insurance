@@ -12,7 +12,7 @@ class RiskFieldSerializer(serializers.ModelSerializer):
 
 
 class RiskTypeListSerializer(serializers.ModelSerializer):
-    risk_fields = RiskFieldSerializer(many=True)
+    risk_fields = RiskFieldSerializer(many=True, required=False)
 
     class Meta:
         model = models.RiskType
@@ -20,7 +20,7 @@ class RiskTypeListSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', )
 
     def create(self, validated_data):
-        risk_fields = validated_data.pop('risk_fields')
+        risk_fields = validated_data.pop('risk_fields', [])
         risk_type = super(RiskTypeListSerializer, self).create(validated_data)
         for field in risk_fields:
             risk_type.risk_fields.create(**field)

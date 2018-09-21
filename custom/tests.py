@@ -90,12 +90,13 @@ class TestListCreateRiskTypes(BaseApiTestCase):
 
     def test_non_superuser_create_risk_type(self):
         self.user.is_superuser = False
+        self.user.is_staff = False
         self.user.save()
         data = {
             'name': 'Non User Risk Type'
         }
         response = self.client.post(self.url, data=data, format='json')
-        self.assertEquals(response.status_code, 400)
+        self.assertEquals(response.status_code, 403)
 
 
 class TestRetrieveUpdateDestroyRiskType(APITestCase):
