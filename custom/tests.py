@@ -1,3 +1,4 @@
+from unittest import TestCase
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 
@@ -11,6 +12,19 @@ class BaseApiTestCase(APITestCase):
         self.user = factories.UserFactory()
         self.token, _ = Token.objects.get_or_create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
+
+
+class TestModelStringRepresentations(TestCase):
+    def setUp(self):
+        self.risk_type = factories.RiskTypeFactory()
+        self.risk_field = factories.RiskFieldFactory(risk_type=self.risk_type)
+
+    def test_risk_type(self):
+        self.assertEquals(str(self.risk_type), self.risk_type.name)
+
+    def test_risk_field(self):
+        self.assertEquals(str(self.risk_field),
+                          f"{self.risk_field.name} {self.risk_field.type}")
 
 
 class TestCreateRiskTypes(BaseApiTestCase):
