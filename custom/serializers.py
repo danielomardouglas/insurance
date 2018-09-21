@@ -7,8 +7,23 @@ class RiskFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RiskField
         fields = ('id', 'name', 'type', 'options')
-        read_only_fields = ('id',)
-        extra_kwargs = {'options': {'required': False}}
+        extra_kwargs = {
+            'options': {'required': False},
+            'id': {
+                'read_only': False,
+                'required': False
+            },
+        }
+
+    def create(self, validated_data):
+        validated_data.pop('id')
+        return super(RiskFieldSerializer, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        validated_data.pop('id')
+        return super(RiskFieldSerializer, self).update(
+            instance, validated_data
+        )
 
 
 class RiskTypeListSerializer(serializers.ModelSerializer):
@@ -25,3 +40,18 @@ class RiskTypeListSerializer(serializers.ModelSerializer):
         for field in risk_fields:
             risk_type.risk_fields.create(**field)
         return risk_type
+
+    def update(self, instance, validated_data):
+        risk_fields = validated_data.pop('risk_fields', [])
+        instance = super(RiskTypeListSerializer, self).update(
+            instance, validated_data)
+        for field_data in risk_fields:
+            field_id = field_data.pop('id', None)
+            if field_id:
+                field = instance.risk_fields.get(id=field_id)
+                for field_key, field_value in field_data.items():
+                    setattr(field, field_key, field_value)
+                field.save()
+            else:
+                instance.risk_fields.create(**field_data)
+        return instance
