@@ -15,16 +15,6 @@ class RiskFieldSerializer(serializers.ModelSerializer):
             },
         }
 
-    def create(self, validated_data):
-        validated_data.pop('id')
-        return super(RiskFieldSerializer, self).create(validated_data)
-
-    def update(self, instance, validated_data):
-        validated_data.pop('id')
-        return super(RiskFieldSerializer, self).update(
-            instance, validated_data
-        )
-
 
 class RiskTypeListSerializer(serializers.ModelSerializer):
     risk_fields = RiskFieldSerializer(many=True, required=False)
