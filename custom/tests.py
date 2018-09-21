@@ -67,3 +67,9 @@ class TestCreateRiskTypes(BaseApiTestCase):
         }
         response = self.client.post(self.url, data=data, format='json')
         self.assertEquals(response.status_code, 201)
+
+    def test_list_risk_types(self):
+        risk_type = factories.RiskTypeFactory()
+        response = self.client.get(self.url, format='json')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.data['results'][0]['name'], risk_type.name)
