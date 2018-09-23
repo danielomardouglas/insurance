@@ -11,3 +11,11 @@ pip-delete-this-directory.txt
 htmlcov/
 .coverage
 .coverage.*
+
+# Frontend Logs
+yarn-error.log
+
+# Frontend stuff
+build/
+node_modules/
+stats.json
