@@ -27,6 +27,6 @@ matrix:
         - yarn run build
       deploy:
         provider: s3
-        bucket: "insurance-front"
+        bucket: "insurance.rexhepberlajolli.me"
         skip_cleanup: true
         local_dir: build
