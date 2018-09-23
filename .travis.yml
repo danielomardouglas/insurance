@@ -1,18 +1,32 @@
-language: python
-python: '3.6'
-addons:
-  postgresql: "9.4"
-install:
-  - pip install -r requirements.txt
-before_script:
-  - psql -c "CREATE DATABASE insurance;" -U postgres
-  - psql -c "CREATE USER iwt WITH PASSWORD '42d31ae0c55d494b8861be0e6';" -U postgres
-  - psql -c "GRANT ALL PRIVILEGES ON DATABASE insurance TO iwt;" -U postgres
-  - psql -c "ALTER USER iwt CREATEDB;" -U postgres
-script:
-  - pycodestyle **/*.py
-  - coverage run --source='.' manage.py test
-  - coverage report --fail-under 100
-after_success:
-  - zappa update prod
-  - zappa manage prod migrate
+matrix:
+  include:
+    - language: python
+      python: '3.6'
+      addons:
+        postgresql: "9.4"
+      install:
+      - pip install -r requirements.txt
+      before_script:
+      - psql -c "CREATE DATABASE insurance;" -U postgres
+      - psql -c "CREATE USER iwt WITH PASSWORD '42d31ae0c55d494b8861be0e6';" -U postgres
+      - psql -c "GRANT ALL PRIVILEGES ON DATABASE insurance TO iwt;" -U postgres
+      - psql -c "ALTER USER iwt CREATEDB;" -U postgres
+      script:
+      - pycodestyle **/*.py
+      - coverage run --source='.' manage.py test
+      - coverage report --fail-under 100
+      after_success:
+      - zappa update prod
+      - zappa manage prod migrate
+    - language: node_js
+      node_js: '10.10.0'
+      install:
+        - yarn install
+      script:
+        - yarn run lint
+        - yarn run build
+      deploy:
+        provider: s3
+        bucket: "insurance-front"
+        skip_cleanup: true
+        local_dir: build
