@@ -1,0 +1,35 @@
+$insuranceColors: (
+  'purple': #412974,
+  'green': #0e402d,
+  'yellow': #ff9f00,
+  'red': #7b0828,
+  'blue': #0090c1,
+  'grey': #929292,
+  'black': #202020,
+  'white': #ffffff,
+);
+
+@each $key, $value in $insuranceColors {
+  .color-#{$key} {
+    color: $value;
+  }
+}
+
+@function insuranceColor($key: 'primary') {
+  @return map-get($insuranceColors, $key);
+}
+
+$color-interval: 10% !global;
+
+// call to get a darker or more lighter variant of a normal color
+// each level is 10% (defined above). Negative values are darker, positive
+// are lighter tones
+@function insuranceColorLevel($color-name: 'blue', $level: 0) {
+  $color: insuranceColor($color-name);
+  $white: #ffffff;
+  $black: #000000;
+  $color-base: if($level < 0, $black, $white);
+  $level-abs: if($level < 0, -$level, $level);
+
+  @return mix($color-base, $color, $level-abs * $color-interval);
+}
