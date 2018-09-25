@@ -22,7 +22,7 @@ const App = () => (
       <meta name="description" content="A risk type management platform" />
     </Helmet>
     <Header />
-    <Container>
+    <Container className="mt-4">
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="" component={NotFoundPage} />
