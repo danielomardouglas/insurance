@@ -11,10 +11,21 @@ header {
 
   .navbar-item {
     margin: 0 10px;
+
     @include sm {
       padding-top: 20px;
       padding-bottom: 5px;
       border-bottom: 1px solid insuranceColorLevel('blue', 4);
+    }
+
+    &.active {
+      .navbar-link {
+        color: insuranceColorLevel('grey', 6);
+
+        &:hover {
+          color: insuranceColor('white');
+        }
+      }
     }
 
     .navbar-link {
