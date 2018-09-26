@@ -1,0 +1,62 @@
+@import "styles/colors";
+@import "styles/animation";
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  text-transform: capitalize;
+  color: insuranceColor('white');
+
+  thead {
+    background-color: insuranceColor('white');
+    color: insuranceColor('grey');
+  }
+
+  tbody {
+    background-color: insuranceColor('white');
+    color: insuranceColor('blue');
+  }
+
+  tr {
+    height: 50px;
+    animation: fadeIn .5s ease-in;
+
+    &:hover {
+      background-color: insuranceColorLevel('grey', 6);
+    }
+  }
+
+  th {
+    font-weight: 700;
+    padding: 0 30px;
+
+    &:first-of-type {
+      border-radius: 5px 0 0 5px;
+    }
+
+    &:last-of-type {
+      border-radius: 0 5px 5px 0;
+    }
+
+    &.action {
+      text-align: right;
+    }
+  }
+
+  td {
+    padding: 0 30px;
+
+    &:first-of-type {
+      border-radius: 5px 0 0 5px;
+    }
+
+    &:last-of-type {
+      border-radius: 0 5px 5px 0;
+    }
+
+    &.action {
+      text-align: right;
+    }
+  }
+}
