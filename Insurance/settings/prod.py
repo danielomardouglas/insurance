@@ -22,3 +22,5 @@ DATABASES = {
         'PORT': os.environ['POSTGRES_PORT']
     },
 }
+
+CORS_ORIGIN_WHITELIST = os.environ['CORS_ORIGIN_WHITELIST'].split(',')
