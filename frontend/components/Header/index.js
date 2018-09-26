@@ -45,9 +45,7 @@ class Header extends Component {
   }
 
   render() {
-    const { location } = this.props;
     const { isOpen } = this.state;
-    const { pathname } = location;
 
     return (
       <header>
