@@ -39,8 +39,63 @@ function checkStatus(response) {
  *
  * @return {object}           The response data
  */
-export default function request(url, options) {
+function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON);
 }
+
+const paramString = (params) => {
+  if (params.length === 0) {
+    return null;
+  }
+
+  const filteredParams = Object.keys(params).filter(
+    (key) => params[key] != null && params[key] !== ''
+  );
+
+  return filteredParams.map(
+    (key) => `${key}=${window.encodeURIComponent(params[key])}`
+  ).join('&');
+};
+
+const apiFetch = (path, options) => {
+  const {
+    urlParams,
+    data,
+    method,
+    headers,
+    ...remOptions
+  } = options || {};
+
+  const url = [
+    ['http://localhost:8000/api/v1', path].join(''),
+    paramString(urlParams || [])
+  ].filter((e) => e != null).join('?');
+
+  let modifiedHeaders = Object.assign({}, headers);
+  modifiedHeaders = Object.assign(modifiedHeaders, {
+    'Content-Type': 'application/json',
+  });
+
+  // const token = getToken();
+  // if (token) {
+  //   modifiedHeaders = Object.assign(modifiedHeaders, { Authorization: `JWT ${token}` });
+  // }
+
+  let requestOptions = {
+    headers: modifiedHeaders,
+    remOptions,
+  };
+
+  if (method !== 'GET' && method !== 'HEAD') {
+    const body = JSON.stringify(data);
+    requestOptions = Object.assign(requestOptions, {
+      body,
+      method,
+    });
+  }
+  return request(url, ...requestOptions);
+};
+
+export default apiFetch;
