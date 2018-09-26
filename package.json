@@ -27,7 +27,7 @@
     "lint:staged": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "lint:eslint"
+    "*.js": "eslint --ignore-path .gitignore"
   },
   "pre-commit": "lint:staged",
   "dependencies": {
