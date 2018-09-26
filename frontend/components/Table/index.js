@@ -6,7 +6,10 @@ import './styles/main.scss';
 class Table extends Component {
   static propTypes = {
     headers: PropTypes.arrayOf(
-      PropTypes.string,
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        field: PropTypes.string.isRequired,
+      }),
     ).isRequired,
     rowData: PropTypes.arrayOf(
       PropTypes.shape({}),
@@ -31,30 +34,20 @@ class Table extends Component {
       <table>
         <thead>
           <tr>
-            {
-              headers.map((header) => (
-                <th key={header}>{header}</th>
-              ))
-            }
-            {
-              action ? (
-                <th className="action">Action</th>
-              ) : null
-            }
+            { headers.map((h) => <th key={h.field}>{h.name}</th>) }
+            { action ? <th className="action">Action</th> : null }
           </tr>
         </thead>
         <tbody>
           {
             rowData.map((data) => (
               <tr key={`row${Object.values(data)[0]}`}>
-                {
-                  headers.map((key) => (
-                    <td key={data[key]}>{data[key]}</td>
-                  ))
-                }
-                {
-                  action ? <td className="action">{action}</td> : null
-                }
+                { headers.map((key) => (
+                  <td key={key.field}>
+                    {data[key.field]}
+                  </td>
+                ))}
+                { action ? <td className="action">{action}</td> : null }
               </tr>
             ))
           }
