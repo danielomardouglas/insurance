@@ -25,6 +25,7 @@
     "eslint:fix": "eslint -- . --ignore-path .gitignore --fix",
     "lint:js": "npm run lint:eslint -- . "
   },
+  "pre-commit": "lint",
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "bootstrap": "^4.1.3",
@@ -96,6 +97,7 @@
     "node-sass": "^4.7.2",
     "null-loader": "0.1.1",
     "plop": "2.0.0",
+    "pre-commit": "^1.2.2",
     "react-svg": "^6.0.15",
     "rimraf": "2.6.2",
     "sass-loader": "^7.0.1",
