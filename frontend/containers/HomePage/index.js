@@ -49,10 +49,6 @@ class HomePage extends React.PureComponent {
       return <LoadingIndicator />;
     }
 
-    if (!riskTypes || riskTypes.length < 1) {
-      return <p>No Risk Types Found</p>;
-    }
-
     const action = <button type="button">View</button>;
 
     return (
@@ -63,11 +59,17 @@ class HomePage extends React.PureComponent {
         </Helmet>
         <div>
           <p>Total Results ({resultsCount})</p>
-          <Table
-            headers={HomePage.dataHeaders}
-            rowData={riskTypes}
-            action={action}
-          />
+          {
+            !riskTypes || riskTypes.length < 1 ? (
+              <p>No Risk Types Found</p>
+            ) : (
+              <Table
+                headers={HomePage.dataHeaders}
+                rowData={riskTypes}
+                action={action}
+              />
+            )
+          }
         </div>
       </div>
     );
