@@ -1,3 +1,4 @@
+from django.test.utils import override_settings
 from unittest import TestCase
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
@@ -165,3 +166,16 @@ class TestRetrieveUpdateDestroyRiskType(BaseApiTestCase):
         self.remove_superuser_status()
         response = self.client.delete(self.url, format='json')
         self.assertEquals(response.status_code, 403)
+
+
+class TestCustomPagination(BaseApiTestCase):
+    def setUp(self):
+        super(TestCustomPagination, self).setUp()
+        for i in range(21):
+            factories.RiskTypeFactory()
+        self.url = f"{reverse_lazy('Custom:list-create-risk-type')}?page=2"
+
+    def test_pagination(self):
+        response = self.client.get(self.url)
+        self.assertEquals(response.data['previous'], 1)
+        self.assertEquals(response.data['next'], 3)
