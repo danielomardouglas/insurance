@@ -59,10 +59,6 @@ const paramString = (params) => {
   ).join('&');
 };
 
-const BASE_URL = process.env.NODE_ENV !== 'production' ? (
-  'http://localhost:8000'
-) : 'https://api.insurance.rexhepberlajolli.me';
-
 const apiFetch = (path, options) => {
   const {
     urlParams,
@@ -73,7 +69,7 @@ const apiFetch = (path, options) => {
   } = options || {};
 
   const url = [
-    [BASE_URL, '/api/v1', path].join(''),
+    ['http://localhost:8000', '/api/v1', path].join(''),
     paramString(urlParams || [])
   ].filter((e) => e != null).join('?');
 
