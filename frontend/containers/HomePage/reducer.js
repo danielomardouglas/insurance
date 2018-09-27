@@ -8,6 +8,8 @@ import {
   LOAD_RISK_TYPES,
   LOAD_RISK_TYPES_SUCCESS,
   LOAD_RISK_TYPES_FAILURE,
+  GET_NEXT_PAGE,
+  GET_PREVIOUS_PAGE,
 } from './constants';
 
 // The initial state of the App
@@ -38,6 +40,12 @@ function homeReducer(state = initialState, action) {
       return state
         .set('loading', false)
         .set('error', action.error);
+    case GET_NEXT_PAGE:
+      return state
+        .set('page', action.currentPage + 1);
+    case GET_PREVIOUS_PAGE:
+      return state
+        .set('page', action.currentPage - 1);
     default:
       return state;
   }
