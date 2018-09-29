@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles/main.scss';
-
-class TextField extends Component {
+class SelectInput extends Component {
   static propTypes = {
     input: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(
+      PropTypes.string,
+    ).isRequired,
     meta: PropTypes.shape({
       touched: PropTypes.bool,
       error: PropTypes.any,
@@ -16,7 +17,7 @@ class TextField extends Component {
 
   render() {
     const {
-      input, label, meta
+      input, label, meta, options,
     } = this.props;
 
     const { error, touched, invalid } = meta;
@@ -29,11 +30,13 @@ class TextField extends Component {
     return (
       <div className="form-group">
         <label htmlFor={label}>{label}
-          <input
-            {...input}
-            id={label}
-            className={className}
-          />
+          <select {...input} className={className} id={label}>
+            {
+              options.map((opt) => (
+                <option value={opt} key={opt}>{opt}</option>
+              ))
+            }
+          </select>
           {
             touched && invalid ? (
               <div className="invalid-feedback">
@@ -47,4 +50,4 @@ class TextField extends Component {
   }
 }
 
-export default TextField;
+export default SelectInput;

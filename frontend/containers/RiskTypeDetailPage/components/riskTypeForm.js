@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form/immutable';
 
 import TextField from '../../../components/TextField';
+import SelectInput from '../../../components/SelectInput';
 
 const fieldTypes = {
-  text: TextField
+  text: TextField,
+  enum: SelectInput,
 };
 
 class RiskTypeForm extends Component {
@@ -34,7 +36,7 @@ class RiskTypeForm extends Component {
 
     return (
       <div>
-        <form onSubmit={handleSubmit}>
+        <form className="form-row" onSubmit={handleSubmit}>
           {
             riskFields.map((riskField) => (
               <div className="col-md-6" key={riskField.name}>
@@ -43,6 +45,7 @@ class RiskTypeForm extends Component {
                     <Field
                       name={riskField.name}
                       label={riskField.name}
+                      options={riskField.options}
                       component={fieldTypes[riskField.type]}
                     />
                   ) : null
