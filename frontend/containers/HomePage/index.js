@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { isEqual } from 'lodash';
+import { Link } from 'react-router-dom';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
@@ -79,7 +80,7 @@ class HomePage extends Component {
       return <LoadingIndicator />;
     }
 
-    const action = <button type="button">View</button>;
+    const Action = (props) => <Link {...props}>View</Link>;
 
     return (
       <div>
@@ -97,7 +98,7 @@ class HomePage extends Component {
                 key="riskTypesTable"
                 headers={HomePage.dataHeaders}
                 rowData={riskTypes}
-                action={action}
+                action={Action}
               />,
               <Pagination
                 key="riskTypesPagination"

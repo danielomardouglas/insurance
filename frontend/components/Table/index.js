@@ -19,6 +19,7 @@ class Table extends Component {
       PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node,
+        PropTypes.func,
       ]),
     ])
   };
@@ -29,6 +30,8 @@ class Table extends Component {
 
   render() {
     const { headers, rowData, action } = this.props;
+
+    const Action = action;
 
     return (
       <table>
@@ -47,7 +50,11 @@ class Table extends Component {
                     {data[key.field]}
                   </td>
                 ))}
-                { action ? <td className="action">{action}</td> : null }
+                { action ? (
+                  <td className="action">
+                    <Action to={`/riskTypes/${data.id}`} />
+                  </td>
+                ) : null }
               </tr>
             ))
           }
