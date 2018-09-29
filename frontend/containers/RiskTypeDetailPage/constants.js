@@ -1,0 +1,7 @@
+export const LOAD_RISK_TYPE_DATA = 'RiskTypeDetailPage/LOAD_RISK_TYPE_DATA';
+export const LOAD_RISK_TYPE_DATA_SUCCESS =
+  'RiskTypeDetailPage/LOAD_RISK_TYPE_DATA_SUCCESS';
+export const LOAD_RISK_TYPE_DATA_FAILURE =
+  'RiskTypeDetailPage/LOAD_RISK_TYPE_DATA_FAILURE';
+
+export const REMOVE_RISK_TYPE_DATA = 'RiskTypeDetailPage/REMOVE_RISK_TYPE_DATA';

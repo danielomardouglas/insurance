@@ -12,6 +12,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import HomePage from '../../containers/HomePage/Loadable';
+import RiskTypeDetailPage from '../../containers/RiskTypeDetailPage/Loadable';
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 
 import Header from '../../components/Header';
@@ -25,6 +26,7 @@ const App = () => (
     <Container className="mt-4">
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/riskTypes/:id" component={RiskTypeDetailPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     </Container>

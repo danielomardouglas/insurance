@@ -1,0 +1,17 @@
+@import "styles/colors";
+
+.risk-type-data-wrapper {
+  background-color: insuranceColor('white');
+  border: 1px solid insuranceColor('grey');
+  padding: 20px;
+  border-radius: 5px;
+
+  .title {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: insuranceColor('grey');
+    margin-bottom: 20px;
+  }
+}
