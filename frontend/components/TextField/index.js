@@ -24,7 +24,6 @@ class TextField extends Component {
     const className = [
       'form-control',
       touched && invalid ? 'is-invalid' : null,
-      'is-invalid'
     ].join(' ');
 
     const htmlFor = label;
