@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form/immutable';
 import TextField from '../../../components/TextField';
 import SelectInput from '../../../components/SelectInput';
 import DateField from '../../../components/DateField';
+import CurrencyField from '../../../components/CurrencyField';
 
 const fieldTypes = {
   text: {
@@ -22,6 +23,10 @@ const fieldTypes = {
   number: {
     type: 'number',
     component: TextField,
+  },
+  currency: {
+    type: 'number',
+    component: CurrencyField,
   }
 };
 
