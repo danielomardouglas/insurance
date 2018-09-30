@@ -8,6 +8,7 @@ import DateField from '../../../components/DateField';
 import CurrencyField from '../../../components/CurrencyField';
 import OptionField from '../../../components/OptionField';
 import ColorField from '../../../components/ColorField';
+import BoolField from '../../../components/BoolField';
 
 const fieldTypes = {
   text: {
@@ -34,6 +35,10 @@ const fieldTypes = {
     type: 'color',
     component: ColorField,
   },
+  bool: {
+    type: 'checkbox',
+    component: BoolField,
+  }
 };
 
 class RiskTypeForm extends Component {

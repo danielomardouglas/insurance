@@ -1,0 +1,36 @@
+.checkbox-wrapper {
+  position: relative;
+
+  .label {
+    margin-left: 25px;
+    font-size: 14px;
+
+    &:before {
+      position: absolute;
+      top: 5px;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      content: '';
+      border: 1px solid #929292;
+      border-radius: 3px;
+    }
+  }
+
+  .checkbox {
+    display: none;
+
+    &:checked + .label:before {
+      background-color: #0090c1;
+      border: none;
+    }
+
+    &:checked + .label:after {
+      position: absolute;
+      content: '\2714';
+      left: 4px;
+      top: 3px;
+      color: #ffffff;
+    }
+  }
+}
