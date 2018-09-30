@@ -4,10 +4,12 @@ import { Field, reduxForm } from 'redux-form/immutable';
 
 import TextField from '../../../components/TextField';
 import SelectInput from '../../../components/SelectInput';
+import DateField from '../../../components/DateField';
 
 const fieldTypes = {
   text: TextField,
   enum: SelectInput,
+  date: DateField,
 };
 
 class RiskTypeForm extends Component {

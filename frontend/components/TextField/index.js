@@ -10,7 +10,7 @@ class TextField extends Component {
     meta: PropTypes.shape({
       touched: PropTypes.bool,
       error: PropTypes.any,
-      warning: PropTypes.any,
+      invalid: PropTypes.any,
     }),
   };
 
