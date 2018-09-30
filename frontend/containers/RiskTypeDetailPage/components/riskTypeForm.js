@@ -19,6 +19,10 @@ const fieldTypes = {
     type: 'text',
     component: DateField
   },
+  number: {
+    type: 'number',
+    component: TextField,
+  }
 };
 
 class RiskTypeForm extends Component {
