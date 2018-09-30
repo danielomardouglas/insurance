@@ -7,6 +7,7 @@ class TextField extends Component {
   static propTypes = {
     input: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     meta: PropTypes.shape({
       touched: PropTypes.bool,
       error: PropTypes.any,
@@ -16,7 +17,7 @@ class TextField extends Component {
 
   render() {
     const {
-      input, label, meta
+      input, label, meta, type,
     } = this.props;
 
     const { error, touched, invalid } = meta;
@@ -31,6 +32,7 @@ class TextField extends Component {
         <label htmlFor={label}>{label}
           <input
             {...input}
+            type={type}
             id={label}
             className={className}
           />

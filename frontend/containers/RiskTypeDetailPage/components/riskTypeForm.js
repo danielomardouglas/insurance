@@ -7,9 +7,18 @@ import SelectInput from '../../../components/SelectInput';
 import DateField from '../../../components/DateField';
 
 const fieldTypes = {
-  text: TextField,
-  enum: SelectInput,
-  date: DateField,
+  text: {
+    type: 'text',
+    component: TextField
+  },
+  enum: {
+    type: 'select',
+    component: SelectInput
+  },
+  date: {
+    type: 'text',
+    component: DateField
+  },
 };
 
 class RiskTypeForm extends Component {
@@ -48,7 +57,8 @@ class RiskTypeForm extends Component {
                       name={riskField.name}
                       label={riskField.name}
                       options={riskField.options}
-                      component={fieldTypes[riskField.type]}
+                      type={fieldTypes[riskField.type].type}
+                      component={fieldTypes[riskField.type].component}
                     />
                   ) : null
                 }

@@ -12,6 +12,7 @@ class DateField extends Component {
   static propTypes = {
     input: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     meta: PropTypes.shape({
       touched: PropTypes.bool,
       error: PropTypes.any,
@@ -32,7 +33,9 @@ class DateField extends Component {
   }
 
   render() {
-    const { input, label, meta } = this.props;
+    const {
+      input, label, type, meta
+    } = this.props;
 
     const { onChange, value, ...restInputProps } = input;
 
@@ -50,6 +53,7 @@ class DateField extends Component {
         <label htmlFor={label}>{label}
           <DatePicker
             {...restInputProps}
+            type={type}
             selected={dateValue}
             className={className}
             id={label}
