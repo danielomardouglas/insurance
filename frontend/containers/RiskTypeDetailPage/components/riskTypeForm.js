@@ -7,6 +7,7 @@ import SelectInput from '../../../components/SelectInput';
 import DateField from '../../../components/DateField';
 import CurrencyField from '../../../components/CurrencyField';
 import OptionField from '../../../components/OptionField';
+import ColorField from '../../../components/ColorField';
 
 const fieldTypes = {
   text: {
@@ -28,6 +29,10 @@ const fieldTypes = {
   currency: {
     type: 'number',
     component: CurrencyField,
+  },
+  color: {
+    type: 'color',
+    component: ColorField,
   },
 };
 
