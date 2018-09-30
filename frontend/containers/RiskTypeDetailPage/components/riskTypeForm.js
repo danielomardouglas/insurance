@@ -6,6 +6,7 @@ import TextField from '../../../components/TextField';
 import SelectInput from '../../../components/SelectInput';
 import DateField from '../../../components/DateField';
 import CurrencyField from '../../../components/CurrencyField';
+import OptionField from '../../../components/OptionField';
 
 const fieldTypes = {
   text: {
@@ -27,7 +28,7 @@ const fieldTypes = {
   currency: {
     type: 'number',
     component: CurrencyField,
-  }
+  },
 };
 
 class RiskTypeForm extends Component {
@@ -68,6 +69,15 @@ class RiskTypeForm extends Component {
                       options={riskField.options}
                       type={fieldTypes[riskField.type].type}
                       component={fieldTypes[riskField.type].component}
+                    />
+                  ) : null
+                }
+                {/* this hack is because each radio needs to be Field */}
+                {
+                  (riskField.type === 'option') ? (
+                    <OptionField
+                      name={riskField.name}
+                      options={riskField.options}
                     />
                   ) : null
                 }
