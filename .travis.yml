@@ -1,6 +1,7 @@
 matrix:
   include:
     - language: python
+      sudo: true
       python: '3.6'
       addons:
         postgresql: "9.4"
@@ -11,6 +12,9 @@ matrix:
       - psql -c "CREATE USER iwt WITH PASSWORD '42d31ae0c55d494b8861be0e6';" -U postgres
       - psql -c "GRANT ALL PRIVILEGES ON DATABASE insurance TO iwt;" -U postgres
       - psql -c "ALTER USER iwt CREATEDB;" -U postgres
+      - wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz -O /tmp/dynamodb_local_latest.tar.gz
+      - tar -xzf /tmp/dynamodb_local_latest.tar.gz -C /tmp
+      - sudo java -jar /tmp/DynamoDBLocal.jar -port 8888 -sharedDb -dbPath /var/lib/dynamodb &
       script:
       - pycodestyle **/*.py
       - coverage run --source='.' manage.py test
