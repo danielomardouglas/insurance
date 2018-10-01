@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.conf import settings
 
 import boto3
+import uuid
 
 from . import factories
 
@@ -214,3 +215,84 @@ class TestCustomPagination(BaseApiTestCase):
         response = self.client.get(self.url)
         self.assertEquals(response.data['previous'], 1)
         self.assertEquals(response.data['next'], 3)
+
+
+class TestListCreateRiskResults(BaseApiTestCase):
+    def setUp(self):
+        super(TestListCreateRiskResults, self).setUp()
+        self.risk_type = factories.RiskTypeFactory()
+        self.risk_field = factories.RiskFieldFactory(risk_type=self.risk_type)
+        self.url = reverse_lazy(
+            'Custom:list-create-risk-results',
+            kwargs={'risk_type_pk': self.risk_type.id}
+        )
+
+    def create_results(self, count=1):
+        for i in range(count):
+            self.dynamodb.put_item(
+                TableName=str(self.risk_type.table_name),
+                Item={
+                    'uuid': {
+                        'S': str(uuid.uuid4()),
+                    },
+                    'Gear': {
+                        'S': 'manual',
+                    },
+                },
+            )
+
+    def test_create(self):
+        data = {
+            'Gear': 'manual',
+        }
+        response = self.client.post(self.url, data=data, format='json')
+        self.assertEquals(response.status_code, 201)
+        item = self.dynamodb.get_item(
+            TableName=str(self.risk_type.table_name),
+            Key={
+                'uuid': {
+                    'S': response.data.get('uuid'),
+                },
+            }
+        )
+        self.assertEquals(item['Item']['Gear']['S'], data['Gear'])
+
+    def test_non_existent_risk_type_create_result(self):
+        url = reverse_lazy(
+            'Custom:list-create-risk-results',
+            kwargs={'risk_type_pk': 99 ** 99}
+        )
+        data = {
+            'Gear': 'manual',
+        }
+        response = self.client.post(url, data=data, format='json')
+        self.assertEquals(response.status_code, 404)
+
+    def test_list(self):
+        self.create_results()
+        response = self.client.get(self.url, format='json')
+        self.assertEquals(response.status_code, 200)
+        self.assertListEqual(
+            list(response.data.keys()),
+            ['results', 'paginationKey']
+        )
+        self.assertEquals(len(response.data.get('results')), 1)
+
+    def test_list_with_pagination(self):
+        self.create_results(11)
+        response = self.client.get(self.url, format='json')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(len(response.data.get('results')), 10)
+        pagination_key = response.data.get('paginationKey')
+        self.assertIsNotNone(pagination_key)
+        page_2_url = f"{self.url}?key={pagination_key}"
+        response = self.client.get(page_2_url, format='json')
+        self.assertEquals(len(response.data.get('results')), 1)
+
+    def test_non_existent_risk_type_list_results(self):
+        url = reverse_lazy(
+            'Custom:list-create-risk-results',
+            kwargs={'risk_type_pk': 99 ** 99}
+        )
+        response = self.client.get(url, format='json')
+        self.assertEquals(response.status_code, 404)
