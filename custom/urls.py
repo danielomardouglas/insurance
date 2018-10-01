@@ -10,4 +10,7 @@ urlpatterns = [
     path('riskTypes/<int:pk>/',
          views.RetrieveUpdateDestroyRiskTypeView.as_view(),
          name='detail-risk-type'),
+    path('riskTypes/<int:risk_type_pk>/results/',
+         views.ListCreateRiskResultsView.as_view(),
+         name='list-create-risk-results'),
 ]
