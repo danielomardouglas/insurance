@@ -1,9 +1,16 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
+
+import boto3
+import uuid
 
 
 class RiskType(models.Model):
     name = models.CharField(max_length=120)
+    table_name = models.UUIDField(default=uuid.uuid4, unique=True)
 
     class Meta:
         ordering = ('-id', )
@@ -13,11 +20,19 @@ class RiskType(models.Model):
     def __str__(self):
         return self.name
 
+    def get_dynamodb_table(self):
+        dynamodb = boto3.resource(
+            'dynamodb',
+            endpoint_url=settings.DYNAMODB_ENDPOINT,
+            region_name=settings.DYNAMODB_REGION,
+        )
+        return dynamodb.Table(str(self.table_name))
+
 
 class RiskField(models.Model):
     TYPE_CHOICES = (
         ('text', 'Text'),
-        ('enum', 'Enum'),
+        ('select', 'Select'),
         ('date', 'Date'),
         ('number', 'Number'),
         ('currency', 'Currency'),
@@ -40,3 +55,32 @@ class RiskField(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.type}"
+
+
+@receiver(post_save, sender=RiskType)
+def create_dynamodb_table(instance, **kwargs):
+    if kwargs.get('created', False):
+        dynamodb = boto3.resource(
+            'dynamodb',
+            endpoint_url=settings.DYNAMODB_ENDPOINT,
+            region_name=settings.DYNAMODB_REGION,
+        )
+        dynamodb.create_table(
+            TableName=str(instance.table_name),
+            KeySchema=[
+                {
+                    'AttributeName': 'uuid',
+                    'KeyType': 'HASH',
+                },
+            ],
+            AttributeDefinitions=[
+                {
+                    'AttributeName': 'uuid',
+                    'AttributeType': 'S'
+                },
+            ],
+            ProvisionedThroughput={
+                'ReadCapacityUnits': 10,
+                'WriteCapacityUnits': 10,
+            }
+        )

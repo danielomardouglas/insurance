@@ -51,3 +51,8 @@ LOGGING = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Amazon DynamoDB settings
+
+DYNAMODB_ENDPOINT = 'http://localhost:8888'
+DYNAMODB_REGION = 'us-east-1'

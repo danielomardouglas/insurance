@@ -21,8 +21,8 @@ class RiskTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.RiskType
-        fields = ('id', 'name', 'risk_fields')
-        read_only_fields = ('id', )
+        fields = ('id', 'name', 'risk_fields', 'table_name')
+        read_only_fields = ('id', 'table_name')
 
     def create(self, validated_data):
         risk_fields = validated_data.pop('risk_fields', [])

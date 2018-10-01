@@ -1,9 +1,11 @@
-from django.test.utils import override_settings
 from unittest import TestCase
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 
 from django.urls import reverse_lazy
+from django.conf import settings
+
+import boto3
 
 from . import factories
 
@@ -13,6 +15,16 @@ class BaseApiTestCase(APITestCase):
         self.user = factories.UserFactory()
         self.token, _ = Token.objects.get_or_create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
+        self.dynamodb = boto3.client(
+            'dynamodb',
+            endpoint_url=settings.DYNAMODB_ENDPOINT,
+            region_name=settings.DYNAMODB_REGION,
+        )
+
+    def tearDown(self):
+        for table in self.dynamodb.list_tables()['TableNames']:
+            self.dynamodb.delete_table(TableName=table)
+        super(BaseApiTestCase, self).tearDown()
 
     def remove_superuser_status(self):
         self.user.is_superuser = False
@@ -37,6 +49,11 @@ class TestListCreateRiskTypes(BaseApiTestCase):
     def setUp(self):
         super(TestListCreateRiskTypes, self).setUp()
         self.url = reverse_lazy('Custom:list-create-risk-type')
+        self.dynamodb = boto3.client(
+            'dynamodb',
+            endpoint_url=settings.DYNAMODB_ENDPOINT,
+            region_name=settings.DYNAMODB_REGION,
+        )
 
     def test_create_risk_type(self):
         data = {
@@ -48,7 +65,7 @@ class TestListCreateRiskTypes(BaseApiTestCase):
                 },
                 {
                     'name': 'Car Model',
-                    'type': 'enum',
+                    'type': 'select',
                     'options': [
                         'Mercedes',
                         'BMW',
@@ -103,6 +120,24 @@ class TestListCreateRiskTypes(BaseApiTestCase):
         }
         response = self.client.post(self.url, data=data, format='json')
         self.assertEquals(response.status_code, 403)
+
+    def test_post_create_dynamodb_table(self):
+        data = {
+            'name': 'DynamoDB Integration',
+        }
+        response = self.client.post(self.url, data=data, format='json')
+        self.assertIn(
+            response.data['table_name'],
+            self.dynamodb.list_tables()['TableNames']
+        )
+
+    def test_get_dynamodb_table_and_check_schema(self):
+        risk_type = factories.RiskTypeFactory()
+        table = risk_type.get_dynamodb_table()
+        self.assertListEqual(
+            table.key_schema,
+            [{'AttributeName': 'uuid', 'KeyType': 'HASH'}]
+        )
 
 
 class TestRetrieveUpdateDestroyRiskType(BaseApiTestCase):

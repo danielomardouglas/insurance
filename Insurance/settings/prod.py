@@ -24,3 +24,8 @@ DATABASES = {
 }
 
 CORS_ORIGIN_WHITELIST = os.environ['CORS_ORIGIN_WHITELIST'].split(',')
+
+# Amazon DynamoDB settings
+
+DYNAMODB_ENDPOINT = os.environ['DYNAMO_DB_ENDPOINT']
+DYNAMODB_REGION = os.environ['DYNAMODB_REGION']
