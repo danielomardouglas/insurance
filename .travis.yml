@@ -14,7 +14,8 @@ matrix:
       - psql -c "ALTER USER iwt CREATEDB;" -U postgres
       - wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz -O /tmp/dynamodb_local_latest.tar.gz
       - tar -xzf /tmp/dynamodb_local_latest.tar.gz -C /tmp
-      - sudo java -jar /tmp/DynamoDBLocal.jar -port 8888 -sharedDb -dbPath /var/lib/dynamodb &
+      - java -Djava.library.path=/tmp/DynamoDBLocal_lib -jar /tmp/DynamoDBLocal.jar -port 8888 -inMemory &
+      - sleep 2
       script:
       - pycodestyle **/*.py
       - coverage run --source='.' manage.py test
