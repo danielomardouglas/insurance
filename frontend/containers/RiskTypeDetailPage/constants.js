@@ -5,3 +5,6 @@ export const LOAD_RISK_TYPE_DATA_FAILURE =
   'RiskTypeDetailPage/LOAD_RISK_TYPE_DATA_FAILURE';
 
 export const REMOVE_RISK_TYPE_DATA = 'RiskTypeDetailPage/REMOVE_RISK_TYPE_DATA';
+
+export const SUBMIT_RISK_TYPE_RESULTS =
+  'RiskTypeDetailPage/SUBMIT_RISK_TYPE_RESULTS';

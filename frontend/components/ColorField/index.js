@@ -16,6 +16,11 @@ class ColorField extends Component {
     color: '#0090c1',
   };
 
+  componentDidMount() {
+    const { color } = this.state;
+    this.handleChange({ hex: color });
+  }
+
   handleClick = () => {
     this.setState({ displayColorPicker: !this.state.displayColorPicker });
   };

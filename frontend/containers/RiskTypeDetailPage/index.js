@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'react-router-redux';
 
 import LoadingIndicator from '../../components/LoadingIndicator';
 
@@ -19,7 +20,11 @@ import {
   makeSelectRiskTypeData,
 } from './selectors';
 
-import { loadRiskTypeData, removeRiskTypeData } from './actions';
+import {
+  loadRiskTypeData,
+  removeRiskTypeData,
+  submitRiskTypeResults,
+} from './actions';
 
 import RiskTypeForm from './components/riskTypeForm';
 
@@ -44,6 +49,8 @@ class RiskTypeDetailPage extends Component {
       loading,
       // error,
       riskTypeData,
+      handleSubmit,
+      redirectToHome,
     } = this.props;
 
     if (loading) {
@@ -75,7 +82,8 @@ class RiskTypeDetailPage extends Component {
                   <p>No Data found</p>
                 ) : (
                   <RiskTypeForm
-                    onSubmit={() => true}
+                    onSubmit={handleSubmit}
+                    onSubmitSuccess={redirectToHome}
                     riskFields={riskFields}
                   />
                 )
@@ -102,6 +110,8 @@ RiskTypeDetailPage.propTypes = {
     PropTypes.bool,
     PropTypes.object,
   ]).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  redirectToHome: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -113,6 +123,10 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
   loadData: (id) => dispatch(loadRiskTypeData(id)),
   unLoadData: () => dispatch(removeRiskTypeData()),
+  handleSubmit: (values) => new Promise((resolve, reject) => dispatch(
+    submitRiskTypeResults(values, resolve, reject)
+  )),
+  redirectToHome: () => dispatch(push('/')),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

@@ -64,7 +64,6 @@ const apiFetch = (path, options) => {
     urlParams,
     data,
     method,
-    headers,
     ...remOptions
   } = options || {};
 
@@ -73,10 +72,9 @@ const apiFetch = (path, options) => {
     paramString(urlParams || [])
   ].filter((e) => e != null).join('?');
 
-  let modifiedHeaders = Object.assign({}, headers);
-  modifiedHeaders = Object.assign(modifiedHeaders, {
+  const headers = {
     'Content-Type': 'application/json',
-  });
+  };
 
   // const token = getToken();
   // if (token) {
@@ -84,18 +82,18 @@ const apiFetch = (path, options) => {
   // }
 
   let requestOptions = {
-    headers: modifiedHeaders,
-    remOptions,
+    headers,
+    ...remOptions,
   };
 
-  if (method !== 'GET' && method !== 'HEAD') {
+  if (method === 'POST' || method === 'PATCH') {
     const body = JSON.stringify(data);
     requestOptions = Object.assign(requestOptions, {
       body,
       method,
     });
   }
-  return request(url, ...requestOptions);
+  return request(url, requestOptions);
 };
 
 export default apiFetch;
