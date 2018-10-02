@@ -114,7 +114,7 @@ Frontend: yarn run lint
 
 ## Running backend tests with coverage
 ```sh
-$ coverage run --source='.' manage.py 
+$ coverage run --source='.' manage.py test
 $ coverage report
 ```
 
