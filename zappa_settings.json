@@ -5,6 +5,15 @@
         "project_name": "insurance",
         "runtime": "python3.6",
         "s3_bucket": "zappa-insurance",
-        "aws_region": "us-east-1"
+        "aws_region": "us-east-1",
+        "exclude": [
+          "node_modules",
+          "media",
+          "static",
+          "webpack",
+          "frontend",
+          "frontendServer",
+          "templates"
+        ]
     }
 }
