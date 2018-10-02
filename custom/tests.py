@@ -18,8 +18,7 @@ class BaseApiTestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
         self.dynamodb = boto3.client(
             'dynamodb',
-            endpoint_url=settings.DYNAMODB_ENDPOINT,
-            region_name=settings.DYNAMODB_REGION,
+            **settings.DYNAMODB_CONNECTION_PARAMS,
         )
 
     def tearDown(self):
@@ -50,11 +49,6 @@ class TestListCreateRiskTypes(BaseApiTestCase):
     def setUp(self):
         super(TestListCreateRiskTypes, self).setUp()
         self.url = reverse_lazy('Custom:list-create-risk-type')
-        self.dynamodb = boto3.client(
-            'dynamodb',
-            endpoint_url=settings.DYNAMODB_ENDPOINT,
-            region_name=settings.DYNAMODB_REGION,
-        )
 
     def test_create_risk_type(self):
         data = {

@@ -112,6 +112,3 @@ REST_FRAMEWORK = {
         'custom.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
-
-AWS_ACCESS_KEY_ID = os.environ['A_W_S_ACCESS_KEY']
-AWS_SECRET_ACCESS_KEY = os.environ['A_W_S_SECRET_KEY']

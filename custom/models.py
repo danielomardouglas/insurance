@@ -20,14 +20,15 @@ class RiskType(models.Model):
     def __str__(self):
         return self.name
 
-    def get_dynamodb_table(self):
-        dynamodb = boto3.resource(
+    @staticmethod
+    def create_connection_to_dynamodb():
+        return boto3.resource(
             'dynamodb',
-            # endpoint_url=settings.DYNAMODB_ENDPOINT,
-            # region_name=settings.DYNAMODB_REGION,
-            # aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            # aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            **settings.DYNAMODB_CONNECTION_PARAMS,
         )
+
+    def get_dynamodb_table(self):
+        dynamodb = self.create_connection_to_dynamodb()
         return dynamodb.Table(str(self.table_name))
 
 
@@ -62,11 +63,7 @@ class RiskField(models.Model):
 @receiver(post_save, sender=RiskType)
 def create_dynamodb_table(instance, **kwargs):
     if kwargs.get('created', False):
-        dynamodb = boto3.resource(
-            'dynamodb',
-            # endpoint_url=settings.DYNAMODB_ENDPOINT,
-            # region_name=settings.DYNAMODB_REGION,
-        )
+        dynamodb = instance.create_connection_to_dynamodb()
         dynamodb.create_table(
             TableName=str(instance.table_name),
             KeySchema=[

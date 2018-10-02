@@ -56,3 +56,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 DYNAMODB_ENDPOINT = 'http://localhost:8888'
 DYNAMODB_REGION = 'us-east-1'
+
+DYNAMODB_CONNECTION_PARAMS = {
+    'endpoint_url': DYNAMODB_ENDPOINT,
+    'region_name': DYNAMODB_REGION,
+}
