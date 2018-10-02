@@ -23,10 +23,10 @@ class RiskType(models.Model):
     def get_dynamodb_table(self):
         dynamodb = boto3.resource(
             'dynamodb',
-            endpoint_url=settings.DYNAMODB_ENDPOINT,
-            region_name=settings.DYNAMODB_REGION,
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            # endpoint_url=settings.DYNAMODB_ENDPOINT,
+            # region_name=settings.DYNAMODB_REGION,
+            # aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            # aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
         )
         return dynamodb.Table(str(self.table_name))
 
@@ -64,8 +64,8 @@ def create_dynamodb_table(instance, **kwargs):
     if kwargs.get('created', False):
         dynamodb = boto3.resource(
             'dynamodb',
-            endpoint_url=settings.DYNAMODB_ENDPOINT,
-            region_name=settings.DYNAMODB_REGION,
+            # endpoint_url=settings.DYNAMODB_ENDPOINT,
+            # region_name=settings.DYNAMODB_REGION,
         )
         dynamodb.create_table(
             TableName=str(instance.table_name),
