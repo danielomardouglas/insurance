@@ -1,0 +1,24 @@
+@import "styles/colors";
+
+.btn-insurance {
+  width: 100%;
+  cursor: pointer;
+  color: insuranceColor('white');
+  font-size: 14px;
+  font-weight: bold;
+  background: insuranceColor('blue');
+  padding: 10px 20px;
+  border-radius: 3px;
+  text-align: center;
+  display: block;
+  border: insuranceColor('blue');
+  transition: .3s all;
+  text-transform: capitalize;
+  outline: none !important;
+
+
+  &:hover {
+    background: insuranceColorLevel('blue', 2);
+  }
+
+}

@@ -9,6 +9,7 @@ import CurrencyField from '../../../components/CurrencyField';
 import OptionField from '../../../components/OptionField';
 import ColorField from '../../../components/ColorField';
 import BoolField from '../../../components/BoolField';
+import Button from '../../../components/Button';
 
 const fieldTypes = {
   text: {
@@ -40,6 +41,9 @@ const fieldTypes = {
     component: BoolField,
   }
 };
+
+// Validate field to not be blank
+const required = (value) => (value ? undefined : 'This field is required');
 
 class RiskTypeForm extends Component {
   static propTypes = {
@@ -79,6 +83,7 @@ class RiskTypeForm extends Component {
                       options={riskField.options}
                       type={fieldTypes[riskField.type].type}
                       component={fieldTypes[riskField.type].component}
+                      validate={[required]}
                     />
                   ) : null
                 }
@@ -94,6 +99,7 @@ class RiskTypeForm extends Component {
               </div>
             ))
           }
+          <Button type="submit">Submit</Button>
         </form>
       </div>
     );

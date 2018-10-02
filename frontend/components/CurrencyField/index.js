@@ -24,8 +24,8 @@ class CurrencyField extends Component {
 
     const className = [
       'form-control',
-      'currency',
       touched && invalid ? 'is-invalid' : null,
+      'currency',
     ].join(' ');
 
     return (
@@ -41,14 +41,14 @@ class CurrencyField extends Component {
               id={label}
               className={className}
             />
-            {
-              touched && invalid ? (
-                <div className="invalid-feedback">
-                  {error}
-                </div>
-              ) : null
-            }
           </div>
+          {
+            touched && invalid ? (
+              <div className="invalid-feedback">
+                {error}
+              </div>
+            ) : null
+          }
         </label>
       </div>
     );
