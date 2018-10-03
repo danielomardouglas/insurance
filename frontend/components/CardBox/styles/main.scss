@@ -1,0 +1,8 @@
+@import "styles/colors";
+
+.card-box {
+  padding: 30px;
+  background: insuranceColor('white');
+  border: 1px solid insuranceColor('grey');
+  border-radius: 10px;
+}

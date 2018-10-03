@@ -20,6 +20,6 @@ from rest_framework.authtoken.views import ObtainAuthToken
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', ObtainAuthToken.as_view(), name='authenticate'),
+    path('api/v1/auth/', ObtainAuthToken.as_view(), name='authenticate'),
     path('api/v1/custom/', include('custom.urls', namespace='Custom'))
 ]

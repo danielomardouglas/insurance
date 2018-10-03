@@ -10,6 +10,8 @@ import { createStructuredSelector } from 'reselect';
 
 import { makeSelectLocation } from '../../containers/App/selectors';
 
+import getToken from '../../utils/token';
+
 import Logo from '../../images/logo.svg';
 
 import './styles/main.scss';
@@ -18,6 +20,20 @@ const insurancePaths = [
   {
     name: 'Risk Types',
     path: '/',
+    private: false,
+    auth: false,
+  },
+  {
+    name: 'Logout',
+    path: '/logout',
+    private: true,
+    auth: false,
+  },
+  {
+    name: 'Authenticate',
+    path: '/auth',
+    private: false,
+    auth: true,
   },
 ];
 
@@ -62,7 +78,21 @@ class Header extends Component {
                 {
                   insurancePaths.map((path) => (
                     <NavItem className={this.itemClass(path)} key={path.name}>
-                      <Link className="navbar-link" to="/">Risk Types</Link>
+                      {
+                        !path.private && !path.auth ? (
+                          <Link className="navbar-link" to={path.path}>{path.name}</Link>
+                        ) : null
+                      }
+                      {
+                        path.private && getToken() ? (
+                          <Link className="navbar-link" to={path.path}>{path.name}</Link>
+                        ) : null
+                      }
+                      {
+                        path.auth && !getToken() ? (
+                          <Link className="navbar-link" to={path.path}>{path.name}</Link>
+                        ) : null
+                      }
                     </NavItem>
                   ))
                 }

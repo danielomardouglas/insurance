@@ -122,7 +122,7 @@ $ coverage report
 
 | Method | Endpoint | Request Data | Response Data | Response Status | Description | Needs Auth & Admin Permissions
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-| POST | /auth/ | {"username": "your_user", "password": "your_password"} | {"token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b" } | 200 | Authenticate user | No
+| POST | /api/v1/auth/ | {"username": "your_user", "password": "your_password"} | {"token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b" } | 200 | Authenticate user | No
 | GET | /api/v1/custom/riskTypes/ | | [{"id": 1, "name": "Car", "table_name": "66470550-4211-4bd0" "risk_fields": [{"name": "Owner": "type": "text"}, ...]}, ...] | 200 | List risk types | No
 | POST | /api/v1/custom/riskTypes/ | {"name": "Car", "risk_fields": [{"name": "Owner", "type": "text", ...}]} | {"id": 1, "name": "Car", "table_name": "66470550-4211-4bd0" "risk_fields": [{"name": "Owner": "type": "text"}, ...]} | 201 | Create risk type | Yes
 | GET | /api/v1/custom/riskTypes/:id/ | | {"id": 1, "name": "Car", "table_name": "66470550-4211-4bd0" "risk_fields": [{"name": "Owner": "type": "text"}, ...]} | 200 | Retrieve risk type | No
