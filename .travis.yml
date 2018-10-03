@@ -21,6 +21,7 @@ matrix:
       - coverage run --source='.' manage.py test
       - coverage report --fail-under 100
       after_success:
+      - bash < (curl -s https://codecov.io/bash)
       - zappa update prod
       - zappa manage prod migrate
     - language: node_js
