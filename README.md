@@ -1,6 +1,8 @@
 # Insurance
 
 [![Build Status](https://travis-ci.com/rexhepberlajolli/Insurance.svg?token=SCeWpri5MyA2EEmP7ypQ&branch=master)](https://travis-ci.com/rexhepberlajolli/Insurance)
+[![codecov](https://codecov.io/gh/rexhepberlajolli/Insurance/branch/master/graph/badge.svg)](https://codecov.io/gh/rexhepberlajolli/Insurance)
+
 
 Insurance is a webapp that allows insurers to create custom risk models and their clients to submit those data.
 
