@@ -4,6 +4,30 @@
 
 Insurance is a webapp that allows insurers to create custom risk models and their clients to submit those data.
 
+## Live Demo
+
+API (Endpoints are documented below)
+```sh
+https://api.insurance.rexhepberlajolli.me/
+```
+
+UI
+```sh
+http://insurance.rexhepberlajolli.me/
+```
+
+To create risk types you will need to authenticate with the following credentials
+```sh
+Username: rexhepberlajolli
+Password: 1Wt1n5UR4nC3
+```
+
+To see the risk dynamic submitted data checkout the following endpoint
+```sh
+https://api.insurance.rexhepberlajolli.me/api/v1/custom/riskTypes/:id/
+Example: https://api.insurance.rexhepberlajolli.me/api/v1/custom/riskTypes/6/
+```
+
 ## Technologies used
 
 Insurance uses a number of open and closed source projects to work properly:
