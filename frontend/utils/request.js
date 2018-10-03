@@ -1,5 +1,7 @@
 import 'whatwg-fetch';
 
+import getToken from './token';
+
 /**
  * Parses the JSON returned by a network request
  *
@@ -72,14 +74,14 @@ const apiFetch = (path, options) => {
     paramString(urlParams || [])
   ].filter((e) => e != null).join('?');
 
-  const headers = {
+  let headers = {
     'Content-Type': 'application/json',
   };
 
-  // const token = getToken();
-  // if (token) {
-  //   modifiedHeaders = Object.assign(modifiedHeaders, { Authorization: `JWT ${token}` });
-  // }
+  const token = getToken();
+  if (token) {
+    headers = Object.assign(headers, { Authorization: `Token ${token}` });
+  }
 
   let requestOptions = {
     headers,

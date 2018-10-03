@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
+import getToken from '../../utils/token';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -93,7 +94,13 @@ class HomePage extends Component {
         <div>
           <div className="d-flex justify-content-between align-items-center">
             <p>Total Results ({resultsCount})</p>
-            <Link className="add-new" to="/">Create New Risk Type</Link>
+            {
+              getToken() ? (
+                <Link className="add-new" to="/newRiskType">
+                  Create New Risk Type
+                </Link>
+              ) : null
+            }
           </div>
           {
             !riskTypes || riskTypes.length < 1 ? (

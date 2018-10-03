@@ -16,7 +16,7 @@ const fieldTypes = {
     type: 'text',
     component: TextField
   },
-  enum: {
+  select: {
     type: 'select',
     component: SelectInput
   },

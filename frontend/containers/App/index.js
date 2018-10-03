@@ -15,6 +15,7 @@ import HomePage from '../../containers/HomePage/Loadable';
 import RiskTypeDetailPage from '../../containers/RiskTypeDetailPage/Loadable';
 import LoginPage from '../../containers/Login/Loadable';
 import LogoutPage from '../../containers/Logout';
+import NewRiskTypePage from '../../containers/NewRiskType/Loadable';
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 
 import Header from '../../components/Header';
@@ -29,6 +30,7 @@ const App = () => (
     <Container className="mt-4">
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <PrivateRoute exact path="/newRiskType" component={NewRiskTypePage} />
         <Route exact path="/riskTypes/:id" component={RiskTypeDetailPage} />
         <PrivateRoute exact path="/logout" component={LogoutPage} />
         <AuthRoute exact path="/auth" component={LoginPage} />
