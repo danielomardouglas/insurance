@@ -14,10 +14,11 @@ import { Container } from 'reactstrap';
 import HomePage from '../../containers/HomePage/Loadable';
 import RiskTypeDetailPage from '../../containers/RiskTypeDetailPage/Loadable';
 import LoginPage from '../../containers/Login/Loadable';
+import LogoutPage from '../../containers/Logout';
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 
 import Header from '../../components/Header';
-import { AuthRoute } from '../../components/Routes';
+import PrivateRoute, { AuthRoute } from '../../components/Routes';
 
 const App = () => (
   <div>
@@ -29,6 +30,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/riskTypes/:id" component={RiskTypeDetailPage} />
+        <PrivateRoute exact path="/logout" component={LogoutPage} />
         <AuthRoute exact path="/auth" component={LoginPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
