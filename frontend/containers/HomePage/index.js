@@ -83,7 +83,7 @@ class HomePage extends Component {
       return <LoadingIndicator />;
     }
 
-    const Action = (props) => <Link {...props}>View</Link>;
+    const Action = (props) => <Link {...props}>Add risk</Link>;
 
     return (
       <div>
