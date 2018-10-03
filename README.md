@@ -24,8 +24,8 @@ Password: 1Wt1n5UR4nC3
 
 To see the risk dynamic submitted data checkout the following endpoint
 ```sh
-https://api.insurance.rexhepberlajolli.me/api/v1/custom/riskTypes/:id/
-Example: https://api.insurance.rexhepberlajolli.me/api/v1/custom/riskTypes/6/
+https://api.insurance.rexhepberlajolli.me/api/v1/custom/riskTypes/:id/results/
+Example: https://api.insurance.rexhepberlajolli.me/api/v1/custom/riskTypes/6/results
 ```
 
 ## Technologies used
