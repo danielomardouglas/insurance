@@ -1,0 +1,16 @@
+@import "styles/colors";
+
+.add-new {
+  padding: 10px;
+  color: insuranceColor('white');
+  font-weight: 700;
+  font-size: 14px;
+  background: insuranceColor('yellow');
+  border-radius: 5px;
+
+  &:hover {
+    text-decoration: none;
+    opacity: 0.8;
+    color: insuranceColor('white');
+  }
+}

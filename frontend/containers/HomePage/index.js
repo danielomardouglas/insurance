@@ -33,6 +33,8 @@ import {
   loadRiskTypes
 } from './actions';
 
+import './styles/main.scss';
+
 class HomePage extends Component {
   static dataHeaders = [
     {
@@ -89,7 +91,10 @@ class HomePage extends Component {
           <meta name="description" content="Home Page" />
         </Helmet>
         <div>
-          <p>Total Results ({resultsCount})</p>
+          <div className="d-flex justify-content-between align-items-center">
+            <p>Total Results ({resultsCount})</p>
+            <Link className="add-new" to="/">Create New Risk Type</Link>
+          </div>
           {
             !riskTypes || riskTypes.length < 1 ? (
               <p>No Risk Types Found</p>
